@@ -1,5 +1,7 @@
 #!/bin/sh
 
+cd "$(dirname "$0")"
+
 yad --on-top --form --undecorated --no-buttons \
     --columns="1" \
     --field="!/usr/share/icons/hicolor/48x48/apps/firefox.png! Firefox :fbtn" "bash from-firefox.sh" \
