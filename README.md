@@ -1,7 +1,7 @@
 treclip
 =======
 
-> Clipboard assistent for Trello checklists from bookmarks
+> Making checklists and comments in Trello from bookmarks
 
 Dependencies
 ------------
