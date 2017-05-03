@@ -28,3 +28,8 @@ $ sh DIRECTORY/treclip/treclip.sh
 ### 2. Prepare and use the clipboard
 
 ![STEP 2: prepare and use the clipboard](step-2.png)
+
+License
+-------
+
+[MIT](LICENSE.md)
