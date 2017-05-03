@@ -11,13 +11,6 @@ function mdwrite() {
 }
 
 
-function possibleclip() {
-
-    echo "$1" | xclip -selection c
-
-}
-
-
 function text() {
 
     sqlite3 $DB "SELECT DISTINCT moz_bookmarks.title, moz_places.url FROM moz_places
@@ -36,5 +29,5 @@ function doall() {
 
 }
 
-possibleclip "`doall`"
+doall | xclip -selection c
 
