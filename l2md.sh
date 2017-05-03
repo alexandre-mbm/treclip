@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-OUT=$(echo $1 | sed "s/\.[^\.]*$//g").md
+DB=$(find $HOME/.mozilla/firefox/*.default/places.sqlite)
 
 
 function mdwrite() {
@@ -15,35 +15,28 @@ function possibleclip() {
 
     which xclip > /dev/null 2>&1
         [ $? -eq 0 ] &&
-            cat $1 | xclip -selection c
+            echo "$1" | xclip -selection c
 
 }
 
 
 function text() {
 
-    TEXT=$( wget -q $URL -O- | grep "<title>" | head -n 1 |
-                sed -e "s/^.*<title>//g" -e "s/<\/title>.*$//g" )
-    if [ -z "$TEXT" ]
-    then
-        echo $URL | sed "s/^.*\/\([^\/]*\)$/\1/g"
-    else
-        echo "$TEXT"
-    fi
+    sqlite3 $DB "SELECT DISTINCT moz_bookmarks.title, moz_places.url FROM moz_places
+INNER JOIN moz_bookmarks ON moz_places.id = moz_bookmarks.fk WHERE moz_places.url = '$1'" | cut -d"|" -f1
 
 }
 
 
 function doall() {
 
-    while read URL
+    for URL in $(xclip -o | sed 1d)
     do 
-        mdwrite "$URL" "`text`"
-    done < $1
+        URL=$(echo -n $URL | sed -e "s/\n//g" -e "s/\r//g")
+        mdwrite "$URL" "`text $URL`"
+    done
 
 }
 
-
-doall $1 > $OUT
-possibleclip $OUT
+possibleclip "`doall`"
 
