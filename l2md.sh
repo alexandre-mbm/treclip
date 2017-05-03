@@ -21,7 +21,7 @@ INNER JOIN moz_bookmarks ON moz_places.id = moz_bookmarks.fk WHERE moz_places.ur
 
 function doall() {
 
-    for URL in $(xclip -o | sed 1d)
+    for URL in $(xclip -o -sel clip | sed 1d)
     do 
         URL=$(echo -n $URL | sed -e "s/\n//g" -e "s/\r//g")
         mdwrite "$URL" "`text $URL`"
