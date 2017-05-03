@@ -13,9 +13,7 @@ function mdwrite() {
 
 function possibleclip() {
 
-    which xclip > /dev/null 2>&1
-        [ $? -eq 0 ] &&
-            echo "$1" | xclip -selection c
+    echo "$1" | xclip -selection c
 
 }
 
