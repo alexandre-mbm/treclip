@@ -20,13 +20,25 @@ function possibleclip() {
 }
 
 
+function text() {
+
+    TEXT=$( wget -q $URL -O- | grep "<title>" | head -n 1 |
+                sed -e "s/^.*<title>//g" -e "s/<\/title>.*$//g" )
+    if [ -z "$TEXT" ]
+    then
+        echo $URL | sed "s/^.*\/\([^\/]*\)$/\1/g"
+    else
+        echo "$TEXT"
+    fi
+
+}
+
+
 function doall() {
 
     while read URL
     do 
-        TEXT=$( wget -q $URL -O- | grep "<title>" | head -n 1 |
-                    sed -e "s/^.*<title>//g" -e "s/<\/title>.*$//g" )
-        mdwrite "$URL" "$TEXT" 
+        mdwrite "$URL" "`text`"
     done < $1
 
 }
